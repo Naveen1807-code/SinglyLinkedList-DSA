@@ -1,0 +1,167 @@
+class DoublyLinkedList{
+    class Node{
+        int data;
+        Node next;
+        Node prev;
+    Node(int data){
+        this.data=data;
+        this.next=null;
+        this.prev=null;
+    }
+}
+
+// InsertAtBegin
+
+Node head,tail;
+
+public void InsertAtBegin(int data){
+    Node newNode=new Node(data);
+    if(head==null){
+        head=newNode;
+        tail=newNode;
+    }
+    else{
+        newNode.next=head;
+        head.prev=newNode;
+        head=newNode;
+    }
+}
+
+// InsertAtEnd
+
+public void InsertAtEnd(int data){
+    Node newNode=new Node(data);
+    if(head==null){
+        head=newNode;
+        tail=newNode;
+    }
+    else{
+        tail.next=newNode;
+        newNode.prev=tail;
+        tail=newNode;
+        
+    }
+}
+
+// DeleteAtBegin
+
+public void DeleteAtBegin(){
+    if(head==null){
+        System.out.println("List is empty");
+        return;
+    }
+    else{
+        head=head.next;
+        head.prev=null;
+    }
+}
+
+// DeleteAtEnd
+
+public void DeleteAtEnd(){
+    if(head==null){
+        System.out.println("List is Empty");
+        return;
+    }
+    else{
+         tail=tail.prev;
+         tail.next=null;
+    }
+}
+
+
+// InsertAtAnyPosition
+
+public void InsertAtAnyPosition(int position,int data){
+    Node newNode=new Node(data);
+    
+    if(position==1){
+        newNode.next=head;
+        if(head!=null){
+             head.prev=newNode;
+        }
+        head=newNode;
+        return;
+    }
+    
+    Node temp= head;
+    int count=1;
+    
+    while(temp!=null && count<position-1){
+        temp=temp.next;
+        count++;
+    }
+    
+    if(temp==null){
+        System.out.println("Position out of bounds");
+        return;
+    }
+    
+    newNode.next=temp.next;
+    newNode.prev=temp;
+    if(temp.next!=null){
+        temp.next.prev=newNode;
+    }
+    temp.next=newNode;
+}
+
+// display
+
+public void Display(){
+    Node temp=head;
+    while(temp!=null){
+        System.out.print(temp.data+" ");
+        if(temp.next!=null){
+            System.out.print(">");
+        }
+        temp=temp.next;
+    }
+    System.out.println();
+}
+}
+
+public class Main{
+	public static void main(String[] args) {
+	DoublyLinkedList list=new DoublyLinkedList();
+	
+	    System.out.println("Insert At Begin:");
+      list.InsertAtBegin(10);
+		  list.InsertAtBegin(20);
+		  list.InsertAtBegin(30);
+		  list.InsertAtBegin(40);
+		  list.InsertAtBegin(50);
+	    list.Display();
+	    
+	    System.out.println("Insert At End:");
+	    list.InsertAtEnd(70);
+	    list.InsertAtEnd(80);
+	    list.InsertAtEnd(90);
+	    list.Display();
+	    
+	    System.out.println("Delete At Begin:");
+	    list.DeleteAtBegin();
+	    list.DeleteAtBegin();
+	    list.DeleteAtBegin();
+	    list.Display();
+	    
+	    System.out.println("Delete At End:");
+	    list.DeleteAtEnd();
+	    list.DeleteAtEnd();
+	    list.Display();
+	    
+	    System.out.println("Insert At Any Position:");
+	    list.InsertAtAnyPosition(2,120);
+	    list.Display();
+	}
+}
+OUTPUT:
+      Insert At Begin:
+      50 >40 >30 >20 >10 
+      Insert At End:
+      50 >40 >30 >20 >10 >70 >80 >90 
+      Delete At Begin:
+      20 >10 >70 >80 >90 
+      Delete At End:
+      20 >10 >70 
+      Insert At Any Position:
+      20 >120 >10 >70 
